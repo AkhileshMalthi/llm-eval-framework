@@ -1,0 +1,8 @@
+eval_name: "Groq_Evaluation_Run"
+dataset_path: "benchmarks/rag_benchmark.jsonl"
+metrics:
+  - bleu
+  - faithfulness
+llm_judge:
+  provider: "groq"
+  model: "llama-3.3-70b-versatile" # Groq's best model
