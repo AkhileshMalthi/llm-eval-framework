@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, field_validator
 from typing import List, Optional
 
 class LLMJudgeConfig(BaseModel):
@@ -16,3 +16,10 @@ class EvalConfig(BaseModel):
     output_dir: str = "results"
     metrics: List[str]
     llm_judge: Optional[LLMJudgeConfig] = None
+    
+    @field_validator('metrics')
+    @classmethod
+    def validate_metrics_not_empty(cls, v):
+        if not v:
+            raise ValueError("Metrics list cannot be empty")
+        return v
