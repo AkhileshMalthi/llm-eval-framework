@@ -32,6 +32,9 @@ dependencies = [
 [tool.poetry]
 packages = [{include = "llm_eval", from = "src"}]
 
+[project.scripts]
+llm-eval = "llm_eval.cli:app"
+
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
