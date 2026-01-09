@@ -1,13 +1,22 @@
 from pathlib import Path
 import pandas as pd
-from typing import List
+from typing import List, Sequence
 from llm_eval.metrics.base import BaseMetric
 
 class Evaluator:
-    def __init__(self, metrics: List[BaseMetric]):
+    def __init__(self, metrics: Sequence[BaseMetric]):
+        """Initialize evaluator with metrics.
+        
+        Args:
+            metrics: Sequence of metric instances to use for evaluation.
+        """
         self.metrics = metrics
 
     def run(self, dataset_path: str | Path):
+        dataset_path = Path(dataset_path)
+        if not dataset_path.exists():
+            raise FileNotFoundError(f"Dataset file not found: {dataset_path}")
+        
         df = pd.read_json(dataset_path, lines=True)
         results = []
 
