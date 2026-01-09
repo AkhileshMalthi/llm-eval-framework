@@ -25,6 +25,7 @@ class JudgeClient:
             messages=[{"role": "user", "content": prompt}],
             temperature=0
         )
+        # TODO: Add response format to enforce JSON output
         if response.choices[0].message.content:
             return response.choices[0].message.content
         

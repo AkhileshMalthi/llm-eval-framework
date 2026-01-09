@@ -1,8 +1,13 @@
-eval_name: "Groq_Evaluation_Run"
+eval_name: "Sample Evaluation with Groq LLM Judge"
 dataset_path: "benchmarks/rag_benchmark.jsonl"
 metrics:
   - bleu
+  - rouge
+  - bertscore
   - faithfulness
+  - context_relevancy
+  - answer_relevancy
+  - judge
 llm_judge:
   provider: "groq"
   model: "llama-3.3-70b-versatile" # Groq's best model

@@ -9,7 +9,9 @@ from rich.table import Table
 from llm_eval.config import EvalConfig
 from llm_eval.evaluator import Evaluator
 from llm_eval.metrics.classical import BleuMetric, RougeLMetric
-from llm_eval.metrics.rag import FaithfulnessMetric
+from llm_eval.metrics.judge import MultiDimensionalJudge
+from llm_eval.metrics.rag import AnswerRelevancyMetric, ContextRelevancyMetric, FaithfulnessMetric
+from llm_eval.metrics.semantic import BERTScoreMetric
 from llm_eval.reporting.visualizer import generate_radar_chart, generate_score_histograms
 from llm_eval.reporting.markdown_gen import generate_markdown_report
 
@@ -21,16 +23,19 @@ console = Console()
 app = typer.Typer(no_args_is_help=True)
 
 def get_metric_instances(config: EvalConfig):
+    llm_provider = config.llm_judge.provider if config.llm_judge else "openai"
+    model = config.llm_judge.model if config.llm_judge and config.llm_judge.model else None
     registry = {
         "bleu": BleuMetric(),
         "rouge": RougeLMetric(),
-        "faithfulness": FaithfulnessMetric(
-            provider=config.llm_judge.provider if config.llm_judge else "openai",
-            model=config.llm_judge.model if config.llm_judge else None
-        )
+        "bertscore": BERTScoreMetric(),
+        "faithfulness": FaithfulnessMetric(provider=llm_provider, model=model),
+        "context_relevancy": ContextRelevancyMetric(provider=llm_provider),
+        "answer_relevancy": AnswerRelevancyMetric(provider=llm_provider),
+        "judge": MultiDimensionalJudge(provider=llm_provider)
     }
-    return [registry[m.lower()] for m in config.metrics if m.lower() in registry]
-
+    return [registry[m] for m in config.metrics if m in registry]
+    
 @app.command()
 def run(
     config_path: Path = typer.Option(..., "--config", "-c", help="Path to YAML config"),
@@ -91,3 +96,6 @@ def run(
 
 if __name__ == "__main__":
     app()
+
+
+# TODO: "openai" has been set as default provider in multiple places; we can centralize this default value
