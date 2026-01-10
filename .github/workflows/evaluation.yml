@@ -44,7 +44,6 @@ jobs:
     
     - name: Run tests with coverage
       env:
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       run: |
         poetry run pytest tests/ --cov=llm_eval --cov-report=xml --cov-report=term-missing --cov-fail-under=80
@@ -87,7 +86,6 @@ jobs:
     
     - name: Run evaluation
       env:
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       run: |
         poetry run python -m llm_eval.cli --config examples/config.yaml --output-dir results/
@@ -126,7 +124,6 @@ jobs:
     
     - name: Test Docker container
       env:
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       run: |
         docker-compose up -d
