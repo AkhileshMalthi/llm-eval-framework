@@ -63,8 +63,7 @@ cd llm-eval-framework
 # Install dependencies
 poetry install
 
-# Activate the virtual environment
-poetry shell
+# Run commands with poetry run (e.g., poetry run llm-eval)
 ```
 
 ### Using pip
@@ -114,27 +113,21 @@ Create a JSONL file with your evaluation data (see `benchmarks/rag_benchmark.jso
 Create a `config.yaml` file:
 
 ```yaml
-benchmark_file: benchmarks/rag_benchmark.jsonl
-output_dir: results
+eval_name: "My Evaluation"
+dataset_path: "benchmarks/rag_benchmark.jsonl"
 
 metrics:
-  - type: bleu
-  - type: rouge
-  - type: bertscore
-  - type: faithfulness
-  - type: context_relevancy
-  - type: answer_relevancy
-  - type: multidimensional_judge
+  - bleu
+  - rouge
+  - bertscore
+  - faithfulness
+  - context_relevancy
+  - answer_relevancy
+  - judge
 
 llm_judge:
-  provider: groq  # or "openai"
-  model: llama-3.3-70b-versatile  # or "gpt-4"
-  dimensions:
-    - accuracy
-    - clarity
-    - completeness
-    - relevance
-    - coherence
+  provider: "groq"  # or "openai"
+  model: "llama-3.3-70b-versatile"  # or "gpt-4"
 ```
 
 ### 4. Run Evaluation
@@ -150,6 +143,8 @@ llm-eval --config examples/config.yaml
 docker-compose run llm-eval llm-eval --config examples/config.yaml
 ```
 
+![CLI Execution](docs/assets/sample_run.png)
+
 ### 5. View Results
 
 Results are saved to the `results/` directory:
@@ -158,7 +153,12 @@ Results are saved to the `results/` directory:
 - `radar_chart.png`: Multi-metric radar visualization
 - `score_histograms.png`: Score distribution charts
 
-## 📚 Usage
+## � CLI in Action
+
+![Sample Evaluation Run](docs/assets/sample_run.png)
+*Running evaluation with the CLI - showing metrics computation and results*
+
+## �📚 Usage
 
 ### Command-Line Interface
 
@@ -180,13 +180,9 @@ from llm_eval import Evaluator, EvalConfig
 
 # Create configuration
 config = EvalConfig(
-    benchmark_file="benchmarks/rag_benchmark.jsonl",
-    output_dir="results",
-    metrics=[
-        {"type": "bleu"},
-        {"type": "rouge"},
-        {"type": "bertscore"}
-    ]
+    eval_name="My Evaluation",
+    dataset_path="benchmarks/rag_benchmark.jsonl",
+    metrics=["bleu", "rouge", "bertscore"]
 )
 
 # Run evaluation
@@ -276,9 +272,9 @@ Configuration is validated using Pydantic models:
 from llm_eval.config import EvalConfig, LLMJudgeConfig
 
 config = EvalConfig(
-    benchmark_file="data.jsonl",
-    output_dir="results",
-    metrics=[{"type": "bleu"}],
+    eval_name="My Evaluation",
+    dataset_path="data.jsonl",
+    metrics=["bleu", "rouge"],
     llm_judge=LLMJudgeConfig(
         provider="openai",
         model="gpt-4"
@@ -334,9 +330,9 @@ METRIC_REGISTRY = {
 
 ```yaml
 metrics:
-  - type: my_custom
-    param1: value1
-    param2: value2
+  - my_custom
+  - bleu
+  - rouge
 ```
 
 ## 🧪 Testing
