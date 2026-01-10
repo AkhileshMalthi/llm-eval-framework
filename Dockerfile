@@ -7,6 +7,7 @@ FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     UV_SYSTEM_PYTHON=1 \
+    UV_HTTP_TIMEOUT=300 \
     NLTK_DATA=/app/nltk_data
 
 WORKDIR /app
