@@ -5,7 +5,7 @@ import json
 import tempfile
 import pandas as pd
 from pathlib import Path
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock
 from llm_eval.evaluator import Evaluator
 
 
@@ -155,7 +155,6 @@ class TestErrorHandling:
         evaluator = Evaluator(metrics=metrics)
         
         # Mock one metric to fail
-        original_compute = metrics[0].compute
         metrics[0].compute = Mock(side_effect=Exception("Metric failed"))
         
         # Should raise exception or handle it

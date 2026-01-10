@@ -4,7 +4,7 @@ import pytest
 import json
 import tempfile
 from pathlib import Path
-from unittest.mock import Mock, patch, mock_open
+from unittest.mock import Mock
 from llm_eval.evaluator import Evaluator
 from llm_eval.metrics.base import MetricResult, BaseMetric
 from llm_eval.metrics.classical import BleuMetric, RougeLMetric

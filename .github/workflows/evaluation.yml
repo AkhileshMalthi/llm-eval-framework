@@ -35,7 +35,7 @@ jobs:
     
     - name: Download NLTK data
       run: |
-        poetry run python -c "import nltk; nltk.download('punkt')"
+        poetry run python -c "import nltk; nltk.download('punkt'); nltk.download('punkt_tab')"
     
     - name: Run linting
       run: |
@@ -82,7 +82,7 @@ jobs:
     
     - name: Download NLTK data
       run: |
-        poetry run python -c "import nltk; nltk.download('punkt')"
+        poetry run python -c "import nltk; nltk.download('punkt'); nltk.download('punkt_tab')"
     
     - name: Run evaluation
       env:
