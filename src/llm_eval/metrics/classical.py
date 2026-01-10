@@ -30,4 +30,6 @@ class RougeLMetric(BaseMetric):
         scores = scorer.score(reference, response)
         return MetricResult(name="ROUGE-L", score=scores['rougeL'].fmeasure)
 
-# TODO: why query and contexts are passed when they are not used? Why query is not optional in BaseMetric?
+# Note: Classical metrics (BLEU, ROUGE) don't use 'query' and 'contexts' parameters,
+# but they are required by the BaseMetric interface to maintain a uniform signature
+# across all metrics. This enables polymorphic usage and consistent API design.

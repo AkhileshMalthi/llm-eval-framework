@@ -1,29 +1,30 @@
 import typer
 import yaml
-import pandas as pd
 from pathlib import Path
 from typing import List, Optional
 from rich.console import Console
 from rich.table import Table
 
 from llm_eval.config import EvalConfig
-from llm_eval.evaluator import Evaluator
-from llm_eval.metrics.classical import BleuMetric, RougeLMetric
-from llm_eval.metrics.judge import MultiDimensionalJudge
-from llm_eval.metrics.rag import AnswerRelevancyMetric, ContextRelevancyMetric, FaithfulnessMetric
-from llm_eval.metrics.semantic import BERTScoreMetric
-from llm_eval.reporting.visualizer import generate_radar_chart, generate_score_histograms
-from llm_eval.reporting.markdown_gen import generate_markdown_report
+from llm_eval.constants import DEFAULT_LLM_PROVIDER
 
-from dotenv import load_dotenv
-
-load_dotenv()
+# Lazy imports for heavy dependencies - only imported when needed
+# This makes --help and other CLI operations fast
 
 console = Console()
 app = typer.Typer(no_args_is_help=True)
 
 def get_metric_instances(config: EvalConfig):
-    llm_provider = config.llm_judge.provider if config.llm_judge else "openai"
+    # Import heavy ML/NLP libraries only when actually running evaluation
+    from llm_eval.metrics.classical import BleuMetric, RougeLMetric
+    from llm_eval.metrics.judge import MultiDimensionalJudge
+    from llm_eval.metrics.rag import AnswerRelevancyMetric, ContextRelevancyMetric, FaithfulnessMetric
+    from llm_eval.metrics.semantic import BERTScoreMetric
+    
+    from dotenv import load_dotenv
+    load_dotenv()
+    
+    llm_provider = config.llm_judge.provider if config.llm_judge else DEFAULT_LLM_PROVIDER
     model = config.llm_judge.model if config.llm_judge and config.llm_judge.model else None
     registry = {
         "bleu": BleuMetric(),
@@ -41,6 +42,12 @@ def run(
     config_path: Path = typer.Option(..., "--config", "-c", help="Path to YAML config"),
     output_dir: Optional[Path] = typer.Option(None, "--output-dir", "-o")
 ):
+    # Import heavy dependencies only when running evaluation
+    import pandas as pd
+    from llm_eval.evaluator import Evaluator
+    from llm_eval.reporting.visualizer import generate_radar_chart, generate_score_histograms
+    from llm_eval.reporting.markdown_gen import generate_markdown_report
+    
     # 1. Load and Validate Config
     if not config_path.exists():
         console.print(f"[bold red]❌ Config file not found:[/bold red] {config_path}")
@@ -96,6 +103,3 @@ def run(
 
 if __name__ == "__main__":
     app()
-
-
-# TODO: "openai" has been set as default provider in multiple places; we can centralize this default value
