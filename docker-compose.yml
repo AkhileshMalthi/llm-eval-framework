@@ -1,1 +1,42 @@
-# For containerization 
+services:
+  llm-eval:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: llm-eval-framework
+    image: llm-eval-framework:latest
+
+    # Environment variables
+    env_file:
+      - .env
+
+    # Volume mounts
+    volumes:
+      - ./benchmarks:/app/benchmarks:ro
+      - ./examples:/app/examples:ro
+      - ./results:/app/results
+      - ./src:/app/src:ro
+
+    working_dir: /app
+
+    # Health check
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import llm_eval; print('healthy')" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+    # Keep container running
+    stdin_open: true
+    tty: true
+
+    # Default command
+    command: python -m llm_eval.cli --help
+
+    networks:
+      - llm-eval-network
+
+networks:
+  llm-eval-network:
+    driver: bridge
