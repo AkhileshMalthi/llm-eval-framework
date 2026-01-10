@@ -121,6 +121,13 @@ jobs:
     - name: Install Docker Compose
       run: sudo apt-get update && sudo apt-get install -y docker-compose
     
+    - name: Create .env file
+      env:
+        GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      run: |
+        echo "GROQ_API_KEY=$GROQ_API_KEY" > .env
+        echo "OPENAI_API_KEY=" >> .env
+    
     - name: Build Docker image
       run: |
         docker-compose build
