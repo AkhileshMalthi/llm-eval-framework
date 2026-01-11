@@ -4,16 +4,18 @@ from openai import OpenAI
 from groq import Groq
 from tenacity import retry, stop_after_attempt, wait_exponential
 
+from llm_eval.constants import DEFAULT_LLM_PROVIDER, DEFAULT_OPENAI_MODEL, DEFAULT_GROQ_MODEL
+
 class JudgeClient:
-    def __init__(self, provider: str = "openai", model: Optional[str] = None):
+    def __init__(self, provider: str = DEFAULT_LLM_PROVIDER, model: Optional[str] = None):
         self.provider = provider.lower()
         
         if self.provider == "openai":
             self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-            self.model = model or "gpt-4o-mini"
+            self.model = model or DEFAULT_OPENAI_MODEL
         elif self.provider == "groq":
             self.client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-            self.model = model or "llama-3.3-70b-versatile"
+            self.model = model or DEFAULT_GROQ_MODEL
         else:
             raise ValueError(f"Unsupported provider: {provider}")
 
