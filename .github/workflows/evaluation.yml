@@ -136,8 +136,6 @@ jobs:
       env:
         GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       run: |
-        docker-compose up -d
-        sleep 10
-        docker-compose ps
-        docker-compose exec -T llm-eval python -c "import llm_eval; print('✅ Container working')"
-        docker-compose down
+        echo "Testing Docker build and CLI accessibility..."
+        docker-compose run --rm llm-eval python -m llm_eval.cli --help
+        echo "✅ Container built successfully and CLI is accessible"
