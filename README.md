@@ -143,8 +143,6 @@ llm-eval --config examples/config.yaml
 docker-compose run llm-eval llm-eval --config examples/config.yaml
 ```
 
-![Sample Config File](docs/assets/sample_run.png)
-
 ### 5. View Results
 
 Results are saved to the `results/` directory:
@@ -154,11 +152,17 @@ Results are saved to the `results/` directory:
 - `score_histograms.png`: Score distribution charts
 
 ## CLI in Action
-![Sample Config File](docs/assets/sample_config.png)
-*Example configuration file for evaluation*
+<p>
+  <img src="docs/assets/sample_config.png" alt="Sample Config File" width="700"/>
+  <br>
+  <em>Example configuration file for evaluation</em>
+</p>
 
-![Sample Evaluation Run](docs/assets/sample_run.png)
-*Running evaluation with the CLI - showing metrics computation and results*
+<p>
+  <img src="docs/assets/sample_run.png" alt="Sample Evaluation Run" width="700"/>
+  <br>
+  <em>Running evaluation with the CLI - showing metrics computation and results</em>
+</p>
 
 ## Usage
 
