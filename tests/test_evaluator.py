@@ -49,9 +49,10 @@ class TestEvaluator:
     
     def test_initialization(self, mock_metrics):
         """Test Evaluator initialization."""
-        evaluator = Evaluator(metrics=mock_metrics)
+        evaluator = Evaluator(metrics=mock_metrics, max_workers=2)
         assert len(evaluator.metrics) == 2
         assert all(isinstance(m, BaseMetric) for m in evaluator.metrics)
+        assert evaluator.max_workers == 2
     
     def test_run_evaluation(self, mock_metrics, sample_dataset_file):
         """Test running evaluation on dataset."""
