@@ -37,6 +37,11 @@ jobs:
       run: |
         poetry run python -c "import nltk; nltk.download('punkt'); nltk.download('punkt_tab')"
     
+    - name: Verify CLI tool accessibility
+      run: |
+        poetry run llm-eval --help
+        echo "✅ CLI tool is accessible"
+    
     - name: Run linting
       run: |
         poetry run python -m pip install ruff
@@ -98,13 +103,40 @@ jobs:
           results/
         retention-days: 30
     
-    - name: Check for critical failures
+    - name: Validate evaluation outputs
       run: |
+        echo "Validating evaluation outputs..."
+        
+        # Check JSON report exists and is valid
         if [ ! -f results/results.json ]; then
           echo "❌ Evaluation failed: results.json not generated"
           exit 1
         fi
-        echo "✅ Evaluation completed successfully"
+        echo "✅ JSON report found"
+        
+        # Validate JSON is parseable
+        if ! python -m json.tool results/results.json > /dev/null 2>&1; then
+          echo "❌ Invalid JSON format in results.json"
+          exit 1
+        fi
+        echo "✅ JSON report is valid"
+        
+        # Check Markdown report exists
+        if [ ! -f results/results.md ]; then
+          echo "❌ Markdown report not generated"
+          exit 1
+        fi
+        echo "✅ Markdown report found"
+        
+        # Check for visualization files
+        png_count=$(find results -name "*.png" -type f | wc -l)
+        if [ "$png_count" -eq 0 ]; then
+          echo "❌ No visualization files (.png) generated"
+          exit 1
+        fi
+        echo "✅ Found $png_count visualization file(s)"
+        
+        echo "✅ All evaluation outputs validated successfully"
 
   docker:
     name: Build and Test Docker Image
@@ -132,10 +164,38 @@ jobs:
       run: |
         docker-compose build
     
-    - name: Test Docker container
-      env:
-        GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+    - name: Test Docker CLI accessibility
       run: |
         echo "Testing Docker build and CLI accessibility..."
         docker-compose run --rm llm-eval python -m llm_eval.cli --help
         echo "✅ Container built successfully and CLI is accessible"
+    
+    - name: Run full evaluation in Docker
+      env:
+        GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      run: |
+        echo "Running full evaluation inside Docker container..."
+        docker-compose run --rm llm-eval python -m llm_eval.cli \
+          --config examples/config.yaml \
+          --benchmark benchmarks/single_item_benchmark.jsonl \
+          --output-dir results/ \
+          --max-workers 1
+        echo "✅ Docker evaluation completed"
+    
+    - name: Validate Docker evaluation outputs
+      run: |
+        echo "Validating outputs from Docker evaluation..."
+        
+        # Check if results directory was created
+        if [ ! -d results ]; then
+          echo "❌ Results directory not created"
+          exit 1
+        fi
+        
+        # Validate outputs exist
+        if [ ! -f results/results.json ]; then
+          echo "❌ Docker evaluation did not generate results.json"
+          exit 1
+        fi
+        
+        echo "✅ Docker Compose evaluation verified successfully"
