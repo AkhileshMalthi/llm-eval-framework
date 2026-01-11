@@ -1,0 +1,1 @@
+{"query": "What is the interest rate for the 'Gold' savings account?", "retrieved_contexts": ["The Silver account has 2% interest.", "The Gold account offers 4.5% interest."], "expected_answer": "The interest rate for the Gold savings account is 4.5%.", "response": "The interest rate for the Gold savings account is 4.5%."}
