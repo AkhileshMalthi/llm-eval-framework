@@ -4,31 +4,7 @@
 
 The LLM Evaluation Framework is designed as a **modular, extensible pipeline** for evaluating Large Language Model outputs using multiple metrics. The architecture follows **object-oriented principles** with clear separation of concerns, enabling easy maintenance and extension.
 
-```mermaid
-graph TB
-    CLI[CLI Interface<br/>cli.py] --> Config[Configuration<br/>config.py]
-    CLI --> Evaluator[Evaluator Engine<br/>evaluator.py]
-    Config --> Evaluator
-    
-    Evaluator --> MetricRegistry[Metric Registry]
-    MetricRegistry --> Classical[Classical Metrics<br/>BLEU, ROUGE]
-    MetricRegistry --> Semantic[Semantic Metrics<br/>BERTScore]
-    MetricRegistry --> RAG[RAG Metrics<br/>Faithfulness, etc.]
-    MetricRegistry --> Judge[LLM-as-a-Judge]
-    
-    Classical --> Results[Results DataFrame]
-    Semantic --> Results
-    RAG --> Results
-    Judge --> Results
-    
-    Results --> Reporting[Reporting Module]
-    Reporting --> JSON[JSON Results]
-    Reporting --> Markdown[Markdown Report]
-    Reporting --> Viz[Visualizations<br/>Charts]
-    
-    Judge --> LLMClient[LLM Client<br/>OpenAI/Groq]
-    RAG --> LLMClient
-```
+![System Architecture Diagram](./assets/architecture_diagram.png)
 
 ---
 
