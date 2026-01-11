@@ -16,6 +16,7 @@ class EvalConfig(BaseModel):
     output_dir: str = "results"
     metrics: List[str]
     llm_judge: Optional[LLMJudgeConfig] = None
+    max_workers: int = 4  # Number of parallel workers for evaluation
     
     @field_validator('metrics')
     @classmethod

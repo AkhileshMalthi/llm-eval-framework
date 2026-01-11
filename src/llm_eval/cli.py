@@ -8,8 +8,7 @@ from rich.table import Table
 from llm_eval.config import EvalConfig
 from llm_eval.constants import DEFAULT_LLM_PROVIDER
 
-# Lazy imports for heavy dependencies - only imported when needed
-# This makes --help and other CLI operations fast
+# Using lazy imports for heavy dependencies - only imported when needed
 
 console = Console()
 app = typer.Typer(no_args_is_help=True)
@@ -40,7 +39,8 @@ def get_metric_instances(config: EvalConfig):
 @app.command()
 def run(
     config_path: Path = typer.Option(..., "--config", "-c", help="Path to YAML config"),
-    output_dir: Optional[Path] = typer.Option(None, "--output-dir", "-o")
+    output_dir: Optional[Path] = typer.Option(None, "--output-dir", "-o"),
+    max_workers: Optional[int] = typer.Option(None, "--max-workers", "-w", help="Number of parallel workers (default: from config or 4)")
 ):
     # Import heavy dependencies only when running evaluation
     import pandas as pd
@@ -64,9 +64,12 @@ def run(
 
     # 3. Initialize Engine
     metrics = get_metric_instances(config)
-    engine = Evaluator(metrics=metrics)
+    workers = max_workers if max_workers is not None else config.max_workers
+    engine = Evaluator(metrics=metrics, max_workers=workers)
 
-    console.print(f"Running evaluation: [bold cyan]{config.eval_name}[/bold cyan]...")
+    console.print(f"[bold cyan]Running evaluation:[/bold cyan] {config.eval_name}...")
+    console.print(f"[dim]Using {workers} parallel workers[/dim]")
+    
     
     # 4. Execute
     results_df = engine.run(config.dataset_path)
