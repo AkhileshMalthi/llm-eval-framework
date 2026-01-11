@@ -5,16 +5,17 @@ from typing import List, Optional
 from rich.console import Console
 from rich.table import Table
 
-from llm_eval.config import EvalConfig
-from llm_eval.constants import DEFAULT_LLM_PROVIDER
-
-# Using lazy imports for heavy dependencies - only imported when needed
+# Using lazy imports for ALL dependencies to keep --help fast
+# Import heavy dependencies only when actually running commands
 
 console = Console()
 app = typer.Typer(no_args_is_help=True)
 
-def get_metric_instances(config: EvalConfig):
+def get_metric_instances(config):
+    """Get metric instances based on config. Imports heavy dependencies lazily."""
     # Import heavy ML/NLP libraries only when actually running evaluation
+    from llm_eval.config import EvalConfig
+    from llm_eval.constants import DEFAULT_LLM_PROVIDER
     from llm_eval.metrics.classical import BleuMetric, RougeLMetric
     from llm_eval.metrics.judge import MultiDimensionalJudge
     from llm_eval.metrics.rag import AnswerRelevancyMetric, ContextRelevancyMetric, FaithfulnessMetric
@@ -39,11 +40,12 @@ def get_metric_instances(config: EvalConfig):
 @app.command()
 def run(
     config_path: Path = typer.Option(..., "--config", "-c", help="Path to YAML config"),
-    output_dir: Optional[Path] = typer.Option(None, "--output-dir", "-o"),
+    output_dir: Optional[Path] = typer.Option(None, "--output-dir", "-o", help="Directory to save outputs (overrides config)"),
     max_workers: Optional[int] = typer.Option(None, "--max-workers", "-w", help="Number of parallel workers (default: from config or 4)")
 ):
-    # Import heavy dependencies only when running evaluation
+    # Import config and heavy dependencies only when running evaluation
     import pandas as pd
+    from llm_eval.config import EvalConfig
     from llm_eval.evaluator import Evaluator
     from llm_eval.reporting.visualizer import generate_radar_chart, generate_score_histograms
     from llm_eval.reporting.markdown_gen import generate_markdown_report
@@ -55,7 +57,7 @@ def run(
 
     with open(config_path, 'r') as f:
         config_data = yaml.safe_load(f)
-        console.print(config_data)  # For debugging purposes
+        console.print(f"[dim]Loaded config data:\n{config_data}[/dim]")
         config = EvalConfig(**config_data)
 
     # 2. Setup Output

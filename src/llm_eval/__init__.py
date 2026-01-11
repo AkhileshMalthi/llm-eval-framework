@@ -14,15 +14,30 @@ __version__ = "0.1.0"
 __author__ = "Akhilesh Malthi"
 __email__ = "akhileshmalthi2299@gmail.com"
 
-from llm_eval.evaluator import Evaluator
-from llm_eval.config import EvalConfig, LLMJudgeConfig
-from llm_eval.metrics.base import BaseMetric, MetricResult
+# Lazy imports to keep CLI fast - imports happen only when actually used
+def __getattr__(name):
+    if name == "Evaluator":
+        from llm_eval.evaluator import Evaluator
+        return Evaluator
+    elif name == "EvalConfig":
+        from llm_eval.config import EvalConfig
+        return EvalConfig
+    elif name == "LLMJudgeConfig":
+        from llm_eval.config import LLMJudgeConfig
+        return LLMJudgeConfig
+    elif name == "BaseMetric":
+        from llm_eval.metrics.base import BaseMetric
+        return BaseMetric
+    elif name == "MetricResult":
+        from llm_eval.metrics.base import MetricResult
+        return MetricResult
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 __all__ = [
-    "Evaluator",
-    "EvalConfig",
-    "LLMJudgeConfig",
-    "BaseMetric",
-    "MetricResult",
+    "Evaluator", # type: ignore
+    "EvalConfig", # type: ignore
+    "LLMJudgeConfig", # type: ignore
+    "BaseMetric", # type: ignore
+    "MetricResult", # type: ignore
     "__version__",
 ]
