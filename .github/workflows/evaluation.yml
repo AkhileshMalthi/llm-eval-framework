@@ -61,6 +61,30 @@ jobs:
         name: codecov-umbrella
       continue-on-error: true
 
+  pip-install:
+    name: Verify Pip Installability
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Test pip install
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+        echo "✅ Package installs successfully via pip"
+    
+    - name: Verify CLI tool works after pip install
+      run: |
+        llm-eval --help
+        echo "✅ CLI accessible via pip installation"
+
   evaluation:
     name: Run Evaluation
     runs-on: ubuntu-latest
