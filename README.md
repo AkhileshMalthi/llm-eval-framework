@@ -57,7 +57,7 @@ This framework provides a comprehensive suite of evaluation metrics for assessin
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/llm-eval-framework.git
+git clone https://github.com/AkhileshMalthi/llm-eval-framework.git
 cd llm-eval-framework
 
 # Install dependencies
@@ -70,7 +70,7 @@ poetry install
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/llm-eval-framework.git
+git clone https://github.com/AkhileshMalthi/llm-eval-framework.git
 cd llm-eval-framework
 
 # Install dependencies
@@ -81,7 +81,7 @@ pip install -e .
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/llm-eval-framework.git
+git clone https://github.com/AkhileshMalthi/llm-eval-framework.git
 cd llm-eval-framework
 
 # Build and run with docker-compose
@@ -443,8 +443,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📮 Contact & Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/llm-eval-framework/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/llm-eval-framework/discussions)
+- **Issues**: [GitHub Issues](https://github.com/AkhileshMalthi/llm-eval-framework/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/AkhileshMalthi/llm-eval-framework/discussions)
 - **Email**: your.email@example.com
 
 ---
