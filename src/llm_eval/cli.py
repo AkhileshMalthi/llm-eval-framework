@@ -86,7 +86,7 @@ def run(
 
     # 5. Generate Markdown
     report_md = generate_markdown_report(results_df, config.eval_name)
-    with open(out / "report.md", "w", encoding="utf-8") as f:
+    with open(out / "results.md", "w", encoding="utf-8") as f:
         f.write(report_md)
 
     # 6. Generate Visuals

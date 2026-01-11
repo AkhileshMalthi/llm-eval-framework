@@ -36,6 +36,7 @@ RUN python -c "import nltk; nltk.download('punkt_tab', download_dir='/app/nltk_d
     python -c "import nltk; nltk.download('punkt', download_dir='/app/nltk_data')"
 
 
+
 # ============================================================================
 # STAGE 2: Runtime - Minimal production image (only what's needed)
 # ============================================================================
@@ -47,21 +48,16 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# Create non-root user for security
-RUN useradd -m -u 1000 appuser && \
-    chown -R appuser:appuser /app
-
-USER appuser
-
 # Copy ONLY installed packages from builder (not build tools!)
-COPY --from=builder --chown=appuser:appuser /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
-COPY --from=builder --chown=appuser:appuser /usr/local/bin /usr/local/bin
-COPY --from=builder --chown=appuser:appuser /app/src /app/src
-COPY --from=builder --chown=appuser:appuser /app/pyproject.toml /app/
-COPY --from=builder --chown=appuser:appuser /app/nltk_data /app/nltk_data
+COPY --from=builder /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
+COPY --from=builder /app/src /app/src
+COPY --from=builder /app/pyproject.toml /app/
+COPY --from=builder /app/nltk_data /app/nltk_data
 
-# Create directories
-RUN mkdir -p /app/results /app/benchmarks /app/examples
+# Create directories with appropriate permissions
+RUN mkdir -p /app/results /app/benchmarks /app/examples && \
+    chmod -R 777 /app/results
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
