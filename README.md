@@ -176,30 +176,48 @@ llm-eval --config config.yaml
 llm-eval --config config.yaml --benchmark benchmarks/custom.jsonl
 
 # Specify custom output directory
-llm-eval --config config.yaml --output results/experiment1
+llm-eval --config config.yaml --output-dir results/experiment1
+
+# Adjust parallel workers
+llm-eval --config config.yaml --max-workers 8
 ```
 
 ### Python API
 
 ```python
-from llm_eval import Evaluator, EvalConfig
+from llm_eval import Evaluator
+from llm_eval.metrics.classical import BleuMetric, RougeLMetric
+from llm_eval.metrics.semantic import BERTScoreMetric
+from llm_eval.reporting.markdown_gen import generate_markdown_report
+from llm_eval.reporting.visualizer import generate_radar_chart, generate_score_histograms
+import pandas as pd
+from pathlib import Path
 
-# Create configuration
-config = EvalConfig(
-    eval_name="My Evaluation",
-    dataset_path="benchmarks/rag_benchmark.jsonl",
-    metrics=["bleu", "rouge", "bertscore"]
-)
+# Initialize metrics
+metrics = [
+    BleuMetric(),
+    RougeLMetric(),
+    BERTScoreMetric()
+]
+
+# Create evaluator
+evaluator = Evaluator(metrics=metrics, max_workers=4)
 
 # Run evaluation
-evaluator = Evaluator(config)
-results = evaluator.run()
+results_df = evaluator.run("benchmarks/rag_benchmark.jsonl")
 
 # Generate reports
-from llm_eval.reporting import generate_markdown_report, generate_radar_chart
+output_dir = Path("results")
+output_dir.mkdir(exist_ok=True)
 
-generate_markdown_report(results, "results/report.md")
-generate_radar_chart(results, "results/radar.png")
+# Generate markdown report
+report_md = generate_markdown_report(results_df, "My Evaluation")
+with open(output_dir / "report.md", "w") as f:
+    f.write(report_md)
+
+# Generate visualizations
+generate_radar_chart(results_df, output_dir / "radar_chart.png")
+generate_score_histograms(results_df, output_dir)
 ```
 
 ### Docker Workflow

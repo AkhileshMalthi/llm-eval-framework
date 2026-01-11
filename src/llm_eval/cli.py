@@ -41,6 +41,7 @@ def get_metric_instances(config):
 def run(
     config_path: Path = typer.Option(..., "--config", "-c", help="Path to YAML config"),
     output_dir: Optional[Path] = typer.Option(None, "--output-dir", "-o", help="Directory to save outputs (overrides config)"),
+    benchmark: Optional[Path] = typer.Option(None, "--benchmark", "-b", help="Custom benchmark file to compare against (overrides dataset in config)"),
     max_workers: Optional[int] = typer.Option(None, "--max-workers", "-w", help="Number of parallel workers (default: from config or 4)")
 ):
     # Import config and heavy dependencies only when running evaluation
@@ -72,9 +73,16 @@ def run(
     console.print(f"[bold cyan]Running evaluation:[/bold cyan] {config.eval_name}...")
     console.print(f"[dim]Using {workers} parallel workers[/dim]")
     
+    # Use custom benchmark if provided, otherwise use config dataset
+    dataset_to_use = benchmark if benchmark else Path(config.dataset_path)
+    if benchmark:
+        console.print(f"[bold yellow]Using custom benchmark:[/bold yellow] {benchmark}")
+        if not benchmark.exists():
+            console.print(f"[bold red]❌ Benchmark file not found:[/bold red] {benchmark}")
+            raise typer.Exit(1)
     
     # 4. Execute
-    results_df = engine.run(config.dataset_path)
+    results_df = engine.run(str(dataset_to_use))
 
     # 5. Generate Markdown
     report_md = generate_markdown_report(results_df, config.eval_name)
