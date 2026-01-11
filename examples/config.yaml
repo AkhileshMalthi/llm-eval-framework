@@ -10,4 +10,4 @@ metrics:
   - judge
 llm_judge:
   provider: "groq"
-  model: "llama-3.3-70b-versatile" # Groq's best model
+  model: "llama-3.3-70b-versatile"

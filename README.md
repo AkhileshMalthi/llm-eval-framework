@@ -143,7 +143,7 @@ llm-eval --config examples/config.yaml
 docker-compose run llm-eval llm-eval --config examples/config.yaml
 ```
 
-![CLI Execution](docs/assets/sample_run.png)
+![Sample Config File](docs/assets/sample_run.png)
 
 ### 5. View Results
 
@@ -153,12 +153,14 @@ Results are saved to the `results/` directory:
 - `radar_chart.png`: Multi-metric radar visualization
 - `score_histograms.png`: Score distribution charts
 
-## � CLI in Action
+## CLI in Action
+![Sample Config File](docs/assets/sample_config.png)
+*Example configuration file for evaluation*
 
 ![Sample Evaluation Run](docs/assets/sample_run.png)
 *Running evaluation with the CLI - showing metrics computation and results*
 
-## �📚 Usage
+## Usage
 
 ### Command-Line Interface
 
