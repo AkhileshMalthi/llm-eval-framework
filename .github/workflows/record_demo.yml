@@ -35,16 +35,25 @@ jobs:
       - name: Create results directory
         run: mkdir -p results docs/assets
 
-      - name: Install ffmpeg
+      - name: Install VHS and dependencies
         run: |
+          # Install ffmpeg and ttyd dependencies
           sudo apt-get update
           sudo apt-get install -y ffmpeg
+          
+          # Install ttyd from GitHub releases
+          sudo wget -q https://github.com/tsl0922/ttyd/releases/download/1.7.7/ttyd.x86_64 -O /usr/local/bin/ttyd
+          sudo chmod +x /usr/local/bin/ttyd
+          
+          # Install VHS from Charm apt repository
+          sudo mkdir -p /etc/apt/keyrings
+          curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+          echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+          sudo apt-get update
+          sudo apt-get install -y vhs
 
       - name: Record demo with VHS
-        uses: charmbracelet/vhs-action@v2
-        with:
-          path: 'demo/demo.tape'
-          version: '0.7.2'
+        run: vhs demo/demo.tape
 
       - name: Upload demo GIF as artifact
         uses: actions/upload-artifact@v4
