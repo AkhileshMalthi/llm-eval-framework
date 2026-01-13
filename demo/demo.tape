@@ -55,9 +55,9 @@ Sleep 500ms
 Type "llm-eval --config examples/config.yaml --benchmark benchmarks/single_item_benchmark.jsonl"
 Enter
 
-# Wait for completion
-Wait+Screen /Evaluation complete/
-Sleep 2s
+# Wait for completion - match "Evaluation Complete!" with extended timeout for model downloads
+Wait@120s+Screen /Evaluation Complete/
+Sleep 3s
 
 Type "clear"
 Enter
