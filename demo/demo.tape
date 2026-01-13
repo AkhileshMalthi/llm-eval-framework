@@ -58,9 +58,15 @@ Type "clear"
 Enter
 Sleep 500ms
 
-# Step 3: Run evaluation
-Type "llm-eval --config examples/config.yaml --benchmark benchmarks/single_item_benchmark.jsonl"
+# Step 3: Run evaluation (multi-line for readability)
+Type "llm-eval \" 
+Sleep 100ms
+Enter
+Type "  --config examples/config.yaml \"
+Sleep 100ms
+Enter
+Type "  --benchmark benchmarks/single_item_benchmark.jsonl"
 Enter
 
-# Sleep to allow evaluation to complete (model download + processing)
-Sleep 90s
+# Wait for evaluation to complete
+Sleep 30s
