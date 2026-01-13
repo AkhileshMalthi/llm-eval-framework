@@ -4,10 +4,6 @@
 # Output configuration
 Output docs/assets/demo.mp4
 
-# ═══════════════════════════════════════════════════════════════
-# Terminal Styling - Premium Look
-# ═══════════════════════════════════════════════════════════════
-
 # Window appearance
 Set WindowBar Colorful
 Set BorderRadius 8
@@ -32,10 +28,6 @@ Set Theme "TokyoNight"
 Set TypingSpeed 40ms
 Set Framerate 30
 Set CursorBlink true
-
-# ═══════════════════════════════════════════════════════════════
-# Demo Script
-# ═══════════════════════════════════════════════════════════════
 
 # Hidden setup - install and prepare
 Hide
@@ -70,6 +62,5 @@ Sleep 500ms
 Type "llm-eval --config examples/config.yaml --benchmark benchmarks/single_item_benchmark.jsonl"
 Enter
 
-# Wait for completion with extended timeout for model downloads
-Wait+Screen@120s /Evaluation Complete/
-Sleep 5s
+# Sleep to allow evaluation to complete (model download + processing)
+Sleep 90s
