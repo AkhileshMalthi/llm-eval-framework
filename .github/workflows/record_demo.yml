@@ -35,10 +35,16 @@ jobs:
       - name: Create results directory
         run: mkdir -p results docs/assets
 
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
       - name: Record demo with VHS
         uses: charmbracelet/vhs-action@v2
         with:
           path: 'demo/demo.tape'
+          version: '0.7.2'
 
       - name: Upload demo GIF as artifact
         uses: actions/upload-artifact@v4
