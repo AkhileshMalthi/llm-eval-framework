@@ -7,6 +7,14 @@ A production-grade framework for evaluating Large Language Model (LLM) responses
 [![Docker](https://img.shields.io/badge/docker-enabled-blue)](https://www.docker.com/)
 [![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-green)](https://github.com/features/actions)
 
+<p align="center">
+  <strong>🎬 See it in action</strong>
+</p>
+
+<p align="center">
+  <img src="docs/assets/demo.gif" alt="LLM Eval Framework Demo" width="800">
+</p>
+
 ## 📋 Overview
 
 This framework provides a comprehensive suite of evaluation metrics for assessing LLM-generated responses. It's designed for researchers, ML engineers, and developers who need reliable, reproducible evaluation of language model outputs.
@@ -151,18 +159,6 @@ Results are saved to the `results/` directory:
 - `radar_chart.png`: Multi-metric radar visualization
 - `score_histograms.png`: Score distribution charts
 
-## CLI in Action
-<p>
-  <img src="docs/assets/sample_config.png" alt="Sample Config File" width="700"/>
-  <br>
-  <em>Example configuration file for evaluation</em>
-</p>
-
-<p>
-  <img src="docs/assets/sample_run.png" alt="Sample Evaluation Run" width="700"/>
-  <br>
-  <em>Running evaluation with the CLI - showing metrics computation and results</em>
-</p>
 
 ## Usage
 
