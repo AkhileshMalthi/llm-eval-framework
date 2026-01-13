@@ -2,7 +2,7 @@
 # Premium terminal recording with polished styling
 
 # Output configuration
-Output docs/assets/demo.mp4
+Output docs/assets/demo.gif
 
 # Window appearance
 Set WindowBar Colorful

@@ -61,7 +61,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: demo-gif
-          path: docs/assets/demo.mp4
+          path: docs/assets/demo.gif
           retention-days: 30
 
       - name: Commit and push updated GIF
@@ -70,6 +70,6 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add docs/assets/demo.mp4
+          git add docs/assets/demo.gif
           git diff --staged --quiet || git commit -m "docs: update demo GIF [skip ci]"
           git push
