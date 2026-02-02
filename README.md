@@ -1,4 +1,4 @@
-# 🚀 LLM Evaluation Framework
+# LLM Evaluation Framework
 
 A production-grade framework for evaluating Large Language Model (LLM) responses using multiple metrics, including classical NLP metrics, semantic similarity, RAG-specific metrics, and LLM-as-a-Judge evaluations.
 
@@ -20,16 +20,16 @@ A production-grade framework for evaluating Large Language Model (LLM) responses
 This framework provides a comprehensive suite of evaluation metrics for assessing LLM-generated responses. It's designed for researchers, ML engineers, and developers who need reliable, reproducible evaluation of language model outputs.
 
 **Key Capabilities:**
-- 🎯 **7 Built-in Metrics**: BLEU, ROUGE-L, BERTScore, Faithfulness, Context Relevancy, Answer Relevancy, Multi-dimensional Judge
-- 📊 **Rich Reporting**: JSON results, markdown reports, radar charts, score histograms
-- 🐳 **Fully Containerized**: Docker and docker-compose ready
-- 🔄 **CI/CD Integrated**: GitHub Actions workflow with automated testing
-- 🧪 **80%+ Test Coverage**: Comprehensive test suite with pytest
-- ⚙️ **Flexible Configuration**: YAML-based configuration with Pydantic validation
-- 🔌 **Multi-Provider Support**: OpenAI and Groq LLM providers
-- 🎨 **Beautiful Visualizations**: matplotlib and seaborn charts
+- **7 Built-in Metrics**: BLEU, ROUGE-L, BERTScore, Faithfulness, Context Relevancy, Answer Relevancy, Multi-dimensional Judge
+- **Rich Reporting**: JSON results, markdown reports, radar charts, score histograms
+- **Fully Containerized**: Docker and docker-compose ready
+- **CI/CD Integrated**: GitHub Actions workflow with automated testing
+- **80%+ Test Coverage**: Comprehensive test suite with pytest
+- **Flexible Configuration**: YAML-based configuration with Pydantic validation
+- **Multi-Provider Support**: OpenAI and Groq LLM providers
+- **Beautiful Visualizations**: matplotlib and seaborn charts
 
-## ✨ Features
+## Features
 
 ### Evaluation Metrics
 
@@ -49,12 +49,12 @@ This framework provides a comprehensive suite of evaluation metrics for assessin
 - **Multi-dimensional Judge**: Customizable dimensions (accuracy, clarity, completeness, etc.)
 
 ### Reporting & Visualization
-- 📄 **JSON Results**: Structured output for programmatic access
-- 📝 **Markdown Reports**: Human-readable evaluation summaries
-- 🎯 **Radar Charts**: Multi-metric performance visualization
-- 📊 **Score Histograms**: Distribution analysis for each metric
+- **JSON Results**: Structured output for programmatic access
+- **Markdown Reports**: Human-readable evaluation summaries
+- **Radar Charts**: Multi-metric performance visualization
+- **Score Histograms**: Distribution analysis for each metric
 
-## 🔧 Installation
+## Installation
 
 ### Prerequisites
 - Python 3.13 or higher
@@ -96,7 +96,7 @@ cd llm-eval-framework
 docker-compose up
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Set Up Your Environment
 
@@ -232,7 +232,7 @@ docker-compose run llm-eval llm-eval --config /app/examples/custom_config.yaml
 docker-compose run llm-eval bash
 ```
 
-## 🏗️ Architecture
+## Architecture
 
 ### Project Structure
 
@@ -302,7 +302,7 @@ config = EvalConfig(
 )
 ```
 
-## 🧩 Adding Custom Metrics
+## Adding Custom Metrics
 
 ### 1. Create Your Metric Class
 
@@ -355,7 +355,7 @@ metrics:
   - rouge
 ```
 
-## 🧪 Testing
+## Testing
 
 The framework includes comprehensive tests with 80%+ coverage:
 
@@ -373,7 +373,7 @@ poetry run pytest tests/test_classical_metrics.py
 poetry run pytest -v
 ```
 
-## 📊 Example Results
+## Example Results
 
 ### Sample Evaluation Output
 
@@ -421,7 +421,7 @@ poetry run pytest -v
 | ... | ... | ... | ... |
 ```
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please follow these steps:
 
@@ -450,22 +450,22 @@ poetry run ruff check src/
 poetry run black src/
 ```
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [NLTK](https://www.nltk.org/) for BLEU implementation
 - [rouge-score](https://github.com/google-research/google-research/tree/master/rouge) for ROUGE metrics
 - [BERTScore](https://github.com/Tiiiger/bert_score) for semantic similarity
 - [OpenAI](https://openai.com/) and [Groq](https://groq.com/) for LLM-as-a-Judge capabilities
 
-## 📮 Contact & Support
+## Contact & Support
 
 - **Issues**: [GitHub Issues](https://github.com/AkhileshMalthi/llm-eval-framework/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/AkhileshMalthi/llm-eval-framework/discussions)
-- **Email**: your.email@example.com
+- **Email**: akhileshmalthi2299@gmail.com
 
 ---
 
