@@ -15,7 +15,7 @@ A production-grade framework for evaluating Large Language Model (LLM) responses
   <img src="docs/assets/demo.gif" alt="LLM Eval Framework Demo" width="800">
 </p>
 
-## 📋 Overview
+## Overview
 
 This framework provides a comprehensive suite of evaluation metrics for assessing LLM-generated responses. It's designed for researchers, ML engineers, and developers who need reliable, reproducible evaluation of language model outputs.
 
