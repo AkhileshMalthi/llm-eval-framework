@@ -1,3 +1,4 @@
+import json
 import typer
 import yaml
 from pathlib import Path
@@ -39,7 +40,7 @@ def get_metric_instances(config):
     
 @app.command()
 def run(
-    config_path: Path = typer.Option(..., "--config", "-c", help="Path to YAML config"),
+    config_path: Path = typer.Option(..., "--config", "-c", help="Path to YAML (.yaml/.yml) or JSON (.json) config file"),
     output_dir: Optional[Path] = typer.Option(None, "--output-dir", "-o", help="Directory to save outputs (overrides config)"),
     benchmark: Optional[Path] = typer.Option(None, "--benchmark", "-b", help="Custom benchmark file to compare against (overrides dataset in config)"),
     max_workers: Optional[int] = typer.Option(None, "--max-workers", "-w", help="Number of parallel workers (default: from config or 4)")
@@ -57,7 +58,14 @@ def run(
         raise typer.Exit(1)
 
     with open(config_path, 'r') as f:
-        config_data = yaml.safe_load(f)
+        ext = config_path.suffix.lower()
+        if ext == '.json':
+            config_data = json.load(f)
+        elif ext in ('.yaml', '.yml'):
+            config_data = yaml.safe_load(f)
+        else:
+            console.print(f"[bold red]❌ Unsupported config format:[/bold red] {config_path.suffix!r}. Use .yaml, .yml, or .json.")
+            raise typer.Exit(1)
         console.print(f"[dim]Loaded config data:\n{config_data}[/dim]")
         config = EvalConfig(**config_data)
 
