@@ -1,0 +1,102 @@
+site_name: LLM Eval Framework
+site_description: A comprehensive framework for evaluating LLM responses with multiple metrics
+site_author: Akhilesh Malthi
+site_url: https://akhileshmalthi.github.io/llm-eval-framework/
+
+repo_name: AkhileshMalthi/llm-eval-framework
+repo_url: https://github.com/AkhileshMalthi/llm-eval-framework
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotate
+    - content.code.copy
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            members_order: source
+            separate_signature: true
+            show_signature_annotations: true
+            unwrap_annotated: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quickstart: getting-started/quickstart.md
+  - Concepts:
+      - Architecture: concepts/architecture.md
+      - Data Model: concepts/data-model.md
+  - Metrics:
+      - Overview (cheat sheet): metrics/overview.md
+      - BLEU: metrics/bleu.md
+      - ROUGE-L: metrics/rouge.md
+      - BERTScore: metrics/bertscore.md
+      - RAG Metrics: metrics/rag.md
+      - LLM-as-Judge: metrics/llm-judge.md
+  - How-To:
+      - Add a Metric: how-to/add-a-metric.md
+  - Reference:
+      - CLI: reference/cli.md
+      - Python API: reference/python-api.md
+  - FAQ: faq.md
+  - Glossary: glossary.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/AkhileshMalthi/llm-eval-framework
